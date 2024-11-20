@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <img src="static/images/nlc.jpg" alt="Logo" class="header-image">
+    <div class="container">
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            <input type="text" name="qr_code" placeholder="Enter QR Code or Number" autofocus required>
+            <input type="text" name="part_number" placeholder="Enter Part Number" required>
+            <input type="text" name="raf_number" placeholder="Enter RAF Number" required>
+            <input type="number" name="num_pieces" placeholder="Enter No of pieces (default 1)" required>
+            
+            <div class="file-label">No file chosen</div>
+            <input type="file" name="upload_file" accept=".xls,.xlsx" id="fileInput">
+            
+            <input type="submit" value="Submit">
+            <input type="button" value="Delete" id="deleteButton" onclick="deleteFile()">
+        </form>
+    </div>
+    <script src="static/js/script.js"></script>
+</body>
+</html>
