@@ -6,7 +6,7 @@ import json
 import pandas as pd
 import re
 
-# Directory to save the uploaded Excel files
+
 UPLOAD_DIRECTORY = 'uploaded_files'
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
