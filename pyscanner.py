@@ -17,15 +17,15 @@ class WebAppViewer(QtWidgets.QMainWindow):
         self.setWindowTitle("QR Code Scanner")
         self.setGeometry(100, 100, 1280, 720)
 
-        # Set up QWebEngineView to load the local HTML file
+        
         self.browser = QWebEngineView()
         self.setCentralWidget(self.browser)
         self.load_html()
 
-        self.uploaded_file_path = None  # Store the uploaded file path
+        self.uploaded_file_path = None 
 
     def load_html(self):
-        # Load HTML file from the local file system
+     
         html_file_path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.browser.setUrl(QtCore.QUrl.fromLocalFile(html_file_path))
 
@@ -38,26 +38,26 @@ class WebAppViewer(QtWidgets.QMainWindow):
             return {"message": "No uploaded file found to delete."}
 
     def save_to_excel(self, part_number, raf_number, quantity, num_pieces):
-        # Use the uploaded file name to determine the path
+       
         if self.uploaded_file_path:
             excel_file_path = os.path.join(UPLOAD_DIRECTORY, f"{os.path.splitext(os.path.basename(self.uploaded_file_path))[0]}.xlsx")
 
-            # Read the existing Excel file or create a new DataFrame if it doesn't exist
+           
             if os.path.exists(excel_file_path):
                 df = pd.read_excel(excel_file_path)
             else:
                 df = pd.DataFrame(columns=["Part number", "Raf Number", "Package Quantity", "No of pieces"])
 
-            # Check if the entry already exists
+           
             existing_row = df[(df['Part number'] == part_number) & (df['Raf Number'] == raf_number)]
 
             if not existing_row.empty:
-                # If exists, increment the values
+               
                 index = existing_row.index[0]
                 df.at[index, "Package Quantity"] += quantity  # Increment Package Quantity
                 df.at[index, "No of pieces"] += num_pieces  # Increment No of pieces
             else:
-                # If not, create a new row
+               
                 new_row = pd.DataFrame({
                     "Part number": [part_number],
                     "Raf Number": [raf_number],
@@ -66,7 +66,7 @@ class WebAppViewer(QtWidgets.QMainWindow):
                 })
                 df = pd.concat([df, new_row], ignore_index=True)
 
-            # Save the updated DataFrame to Excel
+            
             df.to_excel(excel_file_path, index=False)
             return {"message": "Details have been input successfully!"}
         else:
@@ -80,7 +80,7 @@ class WebAppViewer(QtWidgets.QMainWindow):
 
         # Handle QR code input
         if qr_code.isdigit():
-            extracted_value = int(qr_code)  # Use the number directly as quantity
+            extracted_value = int(qr_code)  
         else:
             cleaned_qr_code = qr_code.replace("<GS>", " ").replace("\r", "").replace("\n", "")
             extracted_value = self.extract_value(cleaned_qr_code)  # Extract if it's a valid QR code
@@ -101,7 +101,7 @@ class WebAppViewer(QtWidgets.QMainWindow):
         return "Not Found"
 
     def handle_request(self, request):
-        # Parse the request data
+      
         data = {key: value for key, value in request.form.items()}
 
         if request.method == 'POST':
